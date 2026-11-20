@@ -1,0 +1,18 @@
+{
+ "second_freeze": "refused: [Errno 17] File exists: 'scratch/tmp/candma",
+ "missing_run": "refused: ('missing runs', [(2, 1)])",
+ "non_candidate_record": "refused: ('record matches no frozen candidate (or several)', 'scratch/te",
+ "sealed_set_scored": "refused: ('record scored sets outside validation', 'scratch/temp_dir/wbi",
+ "exposed_set_scored": "refused: ('record scored sets outside validation', 'scratch/temp_dir/wbi",
+ "prefix_record": "refused: ('smoke / prefix record', 'scratch/tmp/pre.",
+ "short_log": "refused: ('record does not cover its whole schedule', 'scratch/temp_dir/",
+ "wrong_seed": "refused: ('seed not frozen', 'scratch/tmp/s7.json', ",
+ "duplicate": "refused: ('duplicate candidate/seed', 'scratch/tmp/r",
+ "changed_rule": "refused: rule file changed after the freeze",
+ "rule_returns_non_candidate": "refused: ('rule returned a non-candidate', 7)",
+ "known_answer_winner": 1,
+ "second_bind": "refused: [Errno 17] File exists: 'scratch/tmp/winner",
+ "launch_winner": "accepted",
+ "launch_other": "refused: launch config is not the bound winner",
+ "ALL_OK": true
+}

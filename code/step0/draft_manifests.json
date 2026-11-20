@@ -1,0 +1,139 @@
+{
+ "status": "DRAFT 20 Nov: not adopted, not scored",
+ "seed": 20261120,
+ "train": {
+  "pool": "train-clean-100 minus 20 cleanS speakers",
+  "n_spk": 231,
+  "hours": 92.679,
+  "utts": 26222,
+  "fp": "6be2097a51bb3334",
+  "h1": {
+   "n_spk": 3,
+   "hours": 1.144,
+   "fp": "88cbc227448f65ca",
+   "speakers": [
+    "1098",
+    "3440",
+    "696"
+   ]
+  },
+  "h5_4": {
+   "n_spk": 14,
+   "hours": 5.529,
+   "fp": "b223541188427cd3",
+   "speakers": [
+    "1098",
+    "3440",
+    "696",
+    "6385",
+    "8468",
+    "27",
+    "229",
+    "6064",
+    "7780",
+    "32",
+    "198",
+    "7178",
+    "7447",
+    "1502"
+   ]
+  }
+ },
+ "validation": {
+  "pool": "dev-other",
+  "speakers": [
+   "1650",
+   "1651",
+   "1686",
+   "1701",
+   "2506",
+   "3660",
+   "3663",
+   "3915",
+   "4153",
+   "4323",
+   "4515",
+   "4570",
+   "6455",
+   "6467",
+   "6599",
+   "6841",
+   "700",
+   "7601",
+   "7641",
+   "7697",
+   "8173",
+   "8254",
+   "8288"
+  ],
+  "n_spk": 23,
+  "fp": "0e59224c096d892e",
+  "exposure": "never in an eval set; TRAINING data of the parked 1c arm B (MIX=B) runs only"
+ },
+ "test_candidates": {
+  "test_clean": {
+   "n_spk": 40,
+   "exposure": "cleanT built 17 Nov, never scored (grep of results/logs)"
+  },
+  "test_other": {
+   "n_spk": 33,
+   "exposure": "ALL 33 speakers in old 'testother' (330 utts), scored many times: NOT sealed"
+  },
+  "hard_untouched": "none on disk; candidate: download LibriSpeech train-other-500 and draw held-out speakers (selected by the same difficulty criterion as dev/test-other)"
+ },
+ "optionB_fixed40": {
+  "speakers": [
+   "1098",
+   "3440",
+   "696",
+   "6385",
+   "8468",
+   "27",
+   "229",
+   "6064",
+   "7780",
+   "32",
+   "198",
+   "7178",
+   "7447",
+   "1502",
+   "8108",
+   "1992",
+   "1183",
+   "78",
+   "4088",
+   "3699",
+   "1970",
+   "4481",
+   "2843",
+   "8797",
+   "5104",
+   "328",
+   "5022",
+   "8580",
+   "3214",
+   "7312",
+   "7859",
+   "1069",
+   "163",
+   "3526",
+   "6529",
+   "7517",
+   "1553",
+   "2691",
+   "7190",
+   "103"
+  ],
+  "h1": {
+   "utts": 307,
+   "hours": 1.073,
+   "fp": "93cc0f366d5ad776"
+  },
+  "h5_4": {
+   "utts": 1531,
+   "hours": 5.436,
+   "fp": "b2fc318b0d99c22b"
+  },
+  "note": "speaker count fixed at 40 for 1 h and 5.4 h; 100 h = all 231"
+ }
+}

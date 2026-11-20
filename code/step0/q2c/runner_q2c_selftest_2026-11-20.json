@@ -1,0 +1,18 @@
+{
+ "good_pair_passes": true,
+ "wrong_seed_arg_refused": true,
+ "plan_differs_refused": true,
+ "targets_differ_refused": true,
+ "rwire_seed_wrong_refused": true,
+ "sigma_not_of_seed_refused": true,
+ "same_mask_refused": true,
+ "recipe_differs_refused": true,
+ "incomplete_run_refused": true,
+ "stop_after_run_refused": true,
+ "S_carries_shuffle_refused": true,
+ "missing_evidence_refused": true,
+ "jobs_ten_fresh_processes": true,
+ "jobs_refuses_four_seeds": true,
+ "sigma_matches_real_R_record_seed0": true,
+ "ALL_OK": true
+}

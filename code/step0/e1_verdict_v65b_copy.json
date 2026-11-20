@@ -1,0 +1,75 @@
+{
+ "S": {
+  "checks": {
+   "rc": true,
+   "counts": true,
+   "eval_events": true,
+   "u_training_e_eval": true,
+   "A_eq_C": true,
+   "D_diverges_pass1_and_later": true,
+   "final_equal_incl_items": true,
+   "D_eq_C_before_injection": true,
+   "event_order": true
+  },
+  "D_first_diff_pass_index": 0,
+  "eval_events_seen": {
+   "A": [
+    6
+   ],
+   "C": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "D": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "PASS": true
+ },
+ "R": {
+  "checks": {
+   "rc": true,
+   "counts": true,
+   "eval_events": true,
+   "u_training_e_eval": true,
+   "A_eq_C": true,
+   "D_diverges_pass1_and_later": true,
+   "final_equal_incl_items": true,
+   "D_eq_C_before_injection": true,
+   "event_order": true
+  },
+  "D_first_diff_pass_index": 0,
+  "eval_events_seen": {
+   "A": [
+    6
+   ],
+   "C": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "D": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "PASS": true
+ },
+ "ALL_PASS": true
+}

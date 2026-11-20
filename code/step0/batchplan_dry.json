@@ -1,0 +1,402 @@
+{
+ "0.5h_d0_s0": {
+  "hours": 0.538,
+  "utts": 288,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d0_s1": {
+  "hours": 0.538,
+  "utts": 288,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d0_s2": {
+  "hours": 0.538,
+  "utts": 288,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d0_s3": {
+  "hours": 0.538,
+  "utts": 288,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d0_s4": {
+  "hours": 0.538,
+  "utts": 288,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "1.0h_d0_s0": {
+  "hours": 1.075,
+  "utts": 539,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d0_s1": {
+  "hours": 1.075,
+  "utts": 539,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d0_s2": {
+  "hours": 1.075,
+  "utts": 539,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d0_s3": {
+  "hours": 1.075,
+  "utts": 539,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d0_s4": {
+  "hours": 1.075,
+  "utts": 539,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "0.5h_d1_s0": {
+  "hours": 0.539,
+  "utts": 319,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d1_s1": {
+  "hours": 0.539,
+  "utts": 319,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d1_s2": {
+  "hours": 0.539,
+  "utts": 319,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d1_s3": {
+  "hours": 0.539,
+  "utts": 319,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d1_s4": {
+  "hours": 0.539,
+  "utts": 319,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "1.0h_d1_s0": {
+  "hours": 1.078,
+  "utts": 557,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d1_s1": {
+  "hours": 1.078,
+  "utts": 557,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d1_s2": {
+  "hours": 1.078,
+  "utts": 557,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d1_s3": {
+  "hours": 1.078,
+  "utts": 557,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d1_s4": {
+  "hours": 1.078,
+  "utts": 557,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "0.5h_d2_s0": {
+  "hours": 0.542,
+  "utts": 209,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d2_s1": {
+  "hours": 0.542,
+  "utts": 209,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d2_s2": {
+  "hours": 0.542,
+  "utts": 209,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d2_s3": {
+  "hours": 0.542,
+  "utts": 209,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d2_s4": {
+  "hours": 0.542,
+  "utts": 209,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "1.0h_d2_s0": {
+  "hours": 1.086,
+  "utts": 449,
+  "passes": 972,
+  "updates": 16546,
+  "min": 17,
+  "max": 18
+ },
+ "1.0h_d2_s1": {
+  "hours": 1.086,
+  "utts": 449,
+  "passes": 972,
+  "updates": 16542,
+  "min": 17,
+  "max": 18
+ },
+ "1.0h_d2_s2": {
+  "hours": 1.086,
+  "utts": 449,
+  "passes": 972,
+  "updates": 16540,
+  "min": 17,
+  "max": 18
+ },
+ "1.0h_d2_s3": {
+  "hours": 1.086,
+  "utts": 449,
+  "passes": 972,
+  "updates": 16539,
+  "min": 17,
+  "max": 18
+ },
+ "1.0h_d2_s4": {
+  "hours": 1.086,
+  "utts": 449,
+  "passes": 972,
+  "updates": 16539,
+  "min": 17,
+  "max": 18
+ },
+ "0.5h_d3_s0": {
+  "hours": 0.537,
+  "utts": 263,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d3_s1": {
+  "hours": 0.537,
+  "utts": 263,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d3_s2": {
+  "hours": 0.537,
+  "utts": 263,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d3_s3": {
+  "hours": 0.537,
+  "utts": 263,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d3_s4": {
+  "hours": 0.537,
+  "utts": 263,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "1.0h_d3_s0": {
+  "hours": 1.075,
+  "utts": 492,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d3_s1": {
+  "hours": 1.075,
+  "utts": 492,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d3_s2": {
+  "hours": 1.075,
+  "utts": 492,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d3_s3": {
+  "hours": 1.075,
+  "utts": 492,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d3_s4": {
+  "hours": 1.075,
+  "utts": 492,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "0.5h_d4_s0": {
+  "hours": 0.536,
+  "utts": 243,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d4_s1": {
+  "hours": 0.536,
+  "utts": 243,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d4_s2": {
+  "hours": 0.536,
+  "utts": 243,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d4_s3": {
+  "hours": 0.536,
+  "utts": 243,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "0.5h_d4_s4": {
+  "hours": 0.536,
+  "utts": 243,
+  "passes": 1944,
+  "updates": 17496,
+  "min": 9,
+  "max": 9
+ },
+ "1.0h_d4_s0": {
+  "hours": 1.079,
+  "utts": 482,
+  "passes": 972,
+  "updates": 16525,
+  "min": 17,
+  "max": 18
+ },
+ "1.0h_d4_s1": {
+  "hours": 1.079,
+  "utts": 482,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d4_s2": {
+  "hours": 1.079,
+  "utts": 482,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ },
+ "1.0h_d4_s3": {
+  "hours": 1.079,
+  "utts": 482,
+  "passes": 972,
+  "updates": 16526,
+  "min": 17,
+  "max": 18
+ },
+ "1.0h_d4_s4": {
+  "hours": 1.079,
+  "utts": 482,
+  "passes": 972,
+  "updates": 16524,
+  "min": 17,
+  "max": 17
+ }
+}

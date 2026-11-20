@@ -1,0 +1,7 @@
+data/
+scratch/
+*.npz
+*.pt
+*.wav
+__pycache__/
+*.pyc

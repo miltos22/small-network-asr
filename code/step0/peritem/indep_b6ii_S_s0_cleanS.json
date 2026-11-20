@@ -1,0 +1,14 @@
+{
+ "tag": "b6ii_S_s0",
+ "set": "cleanS",
+ "n_reader": 300,
+ "n_indep": 300,
+ "same_keys": true,
+ "items_differing": 0,
+ "first": [],
+ "e": [
+  10538,
+  10538
+ ],
+ "PASS": true
+}

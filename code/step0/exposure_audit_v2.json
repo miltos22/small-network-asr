@@ -1,0 +1,78 @@
+{
+ "pools": {
+  "dev-clean": 40,
+  "test-clean": 40,
+  "dev-other": 33,
+  "test-other": 33,
+  "train-clean-100": 251
+ },
+ "sets": {
+  "fit": {
+   "n": 30,
+   "pools": {
+    "dev-clean": 30
+   }
+  },
+  "cal": {
+   "n": 10,
+   "pools": {
+    "dev-clean": 10
+   }
+  },
+  "libriA": {
+   "n": 4,
+   "pools": {
+    "dev-other": 4
+   }
+  },
+  "libriB": {
+   "n": 6,
+   "pools": {
+    "dev-other": 6
+   }
+  },
+  "testother": {
+   "n": 33,
+   "pools": {
+    "test-other": 33
+   }
+  },
+  "cleanS": {
+   "n": 20,
+   "pools": {
+    "train-clean-100": 20
+   }
+  },
+  "cleanT": {
+   "n": 40,
+   "pools": {
+    "test-clean": 40
+   }
+  },
+  "tc100_train": {
+   "n": 251,
+   "pools": {
+    "train-clean-100": 251
+   }
+  },
+  "devother": {
+   "n": 33,
+   "pools": {
+    "dev-other": 33
+   }
+  }
+ },
+ "dev_other_unused_by_eval": [],
+ "test_other_unused_by_eval": [],
+ "test_clean_note": "cleanT built 17 Nov from all test-clean speakers; scoring count below",
+ "mentions_lower_bound": {
+  "libriA": 16410,
+  "libriB": 1063,
+  "testother": 1001,
+  "devother": 105,
+  "cleanS": 10248,
+  "cleanT": 6,
+  "author2": 947
+ },
+ "files_scanned": 1163
+}

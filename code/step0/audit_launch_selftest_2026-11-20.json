@@ -1,0 +1,69 @@
+{
+ "results": {
+  "good": [],
+  "no_lib": [
+   [
+    0,
+    "does not source gpu_runner_lib.sh"
+   ]
+  ],
+  "direct": [
+   [
+    6,
+    "GPU python launched outside gjob: $PY base6s.py S x 0 60"
+   ]
+  ],
+  "direct_literal": [
+   [
+    5,
+    "GPU python launched outside gjob: /opt/python3/bin/python -I base6s.py S x 0 60"
+   ]
+  ],
+  "nohup": [
+   [
+    5,
+    "detached / eval GPU launch"
+   ]
+  ],
+  "own_take": [
+   [
+    5,
+    "redefines take/rel/gjob"
+   ]
+  ],
+  "gate_direct": [
+   [
+    5,
+    "GPU python launched outside gjob: python gpu_gate2.py run K -- $PY a.py"
+   ],
+   [
+    5,
+    "direct gpu_gate2 run (use gjob)"
+   ]
+  ],
+  "other_gpu": [
+   [
+    5,
+    "CUDA_VISIBLE_DEVICES not 0"
+   ]
+  ],
+  "alias_var": [
+   [
+    6,
+    "GPU python launched outside gjob: $P2 a.py"
+   ]
+  ]
+ },
+ "ok": {
+  "good": true,
+  "no_lib": true,
+  "direct": true,
+  "direct_literal": true,
+  "nohup": true,
+  "own_take": true,
+  "gate_direct": true,
+  "other_gpu": true,
+  "alias_var": true
+ },
+ "ALL_OK": true
+}

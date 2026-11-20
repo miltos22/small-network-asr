@@ -1,0 +1,23 @@
+{
+ "release_without_registration": true,
+ "release_without_bind": true,
+ "bind_missing_slot": true,
+ "bind_ineligible_job": true,
+ "bind_incomplete_run": true,
+ "legacy_slot_skips_gate_only_for_listed": true,
+ "bind_twice": true,
+ "changed_checkpoint_refused_in_child": true,
+ "refused_release_leaves_panel_compromised": true,
+ "concurrent_release_one_wins": true,
+ "rows_known_answer": true,
+ "release_digest_matches_entry": true,
+ "second_release_refused": true,
+ "register_after_access_refused": true,
+ "crash_child_refused": true,
+ "after_crash_compromised_no_retry": true,
+ "missing_item_refused": true,
+ "protocol_edit_refused": true,
+ "child_env_refuses_warp": true,
+ "child_env_refuses_feat": true,
+ "ALL_OK": true
+}

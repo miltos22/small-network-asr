@@ -1,0 +1,46 @@
+{
+ "40+40_speaker": {
+  "coverage": 1.0,
+  "broken_coverage": 0.975
+ },
+ "40+40_seed": {
+  "coverage": 0.9855,
+  "broken_coverage": 0.10125
+ },
+ "40+40_interaction": {
+  "coverage": 0.99875,
+  "broken_coverage": 0.92825
+ },
+ "40+40_mixed": {
+  "coverage": 0.991,
+  "broken_coverage": 0.63175
+ },
+ "40_speaker": {
+  "coverage": 0.99975,
+  "broken_coverage": 0.97775
+ },
+ "40_seed": {
+  "coverage": 0.986,
+  "broken_coverage": 0.16375
+ },
+ "40_interaction": {
+  "coverage": 0.99925,
+  "broken_coverage": 0.9585
+ },
+ "40_mixed": {
+  "coverage": 0.99475,
+  "broken_coverage": 0.76775
+ },
+ "known_answers": {
+  "win": "WIN",
+  "harm": [
+   "INCONCLUSIVE",
+   [
+    -5.970644201454297,
+    1.1573985560212912
+   ]
+  ],
+  "loss": "LOSS"
+ },
+ "PASS": true
+}

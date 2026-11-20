@@ -1,0 +1,17 @@
+{
+ "known_answer_equals_direct": true,
+ "known_answer_verdict": "WIN",
+ "Delta": -1.0792154614825782,
+ "dup_row_refused": true,
+ "same_item_deleted_everywhere_refused": true,
+ "one_cell_item_missing_refused": true,
+ "extra_panel_refused": true,
+ "speaker_swap_refused": true,
+ "reference_count_changed_refused": true,
+ "extra_seed_refused": true,
+ "negative_count_refused": true,
+ "protocol_edited_after_registration_refused": true,
+ "four_seed_protocol_refused": true,
+ "unreleased_panel_refused": true,
+ "ALL_OK": true
+}

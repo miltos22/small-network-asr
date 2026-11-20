@@ -1,0 +1,491 @@
+{
+ "base6s.py": {
+  "expression": "(((ep + 1) * int(_evn)) // epochs > (ep * int(_evn)) // epochs if _evn else (ep + 1) % B6.EVAL_EVERY == 0) or ep + 1 == epochs",
+  "results": {
+   "Q2c 0.5 h EVAL_N=30": {
+    "epochs": 1836,
+    "events": 30,
+    "first": [
+     62,
+     123,
+     184
+    ],
+    "last": [
+     1714,
+     1775,
+     1836
+    ],
+    "gap_min": 61,
+    "gap_max": 62,
+    "ok": true
+   },
+   "Q2c 0.5 h EVAL_N=None": {
+    "epochs": 1836,
+    "events": 306,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     1824,
+     1830,
+     1836
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "Q1 1 h EVAL_N=30": {
+    "epochs": 972,
+    "events": 30,
+    "first": [
+     33,
+     65,
+     98
+    ],
+    "last": [
+     908,
+     940,
+     972
+    ],
+    "gap_min": 32,
+    "gap_max": 33,
+    "ok": true
+   },
+   "Q1 1 h EVAL_N=None": {
+    "epochs": 972,
+    "events": 162,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     960,
+     966,
+     972
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "Q4 5.4 h full EVAL_N=30": {
+    "epochs": 60,
+    "events": 30,
+    "first": [
+     2,
+     4,
+     6
+    ],
+    "last": [
+     56,
+     58,
+     60
+    ],
+    "gap_min": 2,
+    "gap_max": 2,
+    "ok": true
+   },
+   "Q4 5.4 h full EVAL_N=None": {
+    "epochs": 60,
+    "events": 10,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     48,
+     54,
+     60
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "Q4 half EVAL_N=30": {
+    "epochs": 90,
+    "events": 30,
+    "first": [
+     3,
+     6,
+     9
+    ],
+    "last": [
+     84,
+     87,
+     90
+    ],
+    "gap_min": 3,
+    "gap_max": 3,
+    "ok": true
+   },
+   "Q4 half EVAL_N=None": {
+    "epochs": 90,
+    "events": 15,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     78,
+     84,
+     90
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "E1 prefix plan 0.5 h EVAL_N=30": {
+    "epochs": 60,
+    "events": 30,
+    "first": [
+     2,
+     4,
+     6
+    ],
+    "last": [
+     56,
+     58,
+     60
+    ],
+    "gap_min": 2,
+    "gap_max": 2,
+    "ok": true
+   },
+   "E1 prefix plan 0.5 h EVAL_N=None": {
+    "epochs": 60,
+    "events": 10,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     48,
+     54,
+     60
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "old 5.4 h EVAL_N=30": {
+    "epochs": 60,
+    "events": 30,
+    "first": [
+     2,
+     4,
+     6
+    ],
+    "last": [
+     56,
+     58,
+     60
+    ],
+    "gap_min": 2,
+    "gap_max": 2,
+    "ok": true
+   },
+   "old 5.4 h EVAL_N=None": {
+    "epochs": 60,
+    "events": 10,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     48,
+     54,
+     60
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "1 h old EVAL_N=30": {
+    "epochs": 108,
+    "events": 30,
+    "first": [
+     4,
+     8,
+     11
+    ],
+    "last": [
+     101,
+     105,
+     108
+    ],
+    "gap_min": 3,
+    "gap_max": 4,
+    "ok": true
+   },
+   "1 h old EVAL_N=None": {
+    "epochs": 108,
+    "events": 18,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     96,
+     102,
+     108
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   }
+  },
+  "ALL_OK": true
+ },
+ "base6.py": {
+  "expression": "(((ep + 1) * int(_evn)) // epochs > (ep * int(_evn)) // epochs if _evn else (ep + 1) % EVAL_EVERY == 0) or ep + 1 == epochs",
+  "results": {
+   "Q2c 0.5 h EVAL_N=30": {
+    "epochs": 1836,
+    "events": 30,
+    "first": [
+     62,
+     123,
+     184
+    ],
+    "last": [
+     1714,
+     1775,
+     1836
+    ],
+    "gap_min": 61,
+    "gap_max": 62,
+    "ok": true
+   },
+   "Q2c 0.5 h EVAL_N=None": {
+    "epochs": 1836,
+    "events": 306,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     1824,
+     1830,
+     1836
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "Q1 1 h EVAL_N=30": {
+    "epochs": 972,
+    "events": 30,
+    "first": [
+     33,
+     65,
+     98
+    ],
+    "last": [
+     908,
+     940,
+     972
+    ],
+    "gap_min": 32,
+    "gap_max": 33,
+    "ok": true
+   },
+   "Q1 1 h EVAL_N=None": {
+    "epochs": 972,
+    "events": 162,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     960,
+     966,
+     972
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "Q4 5.4 h full EVAL_N=30": {
+    "epochs": 60,
+    "events": 30,
+    "first": [
+     2,
+     4,
+     6
+    ],
+    "last": [
+     56,
+     58,
+     60
+    ],
+    "gap_min": 2,
+    "gap_max": 2,
+    "ok": true
+   },
+   "Q4 5.4 h full EVAL_N=None": {
+    "epochs": 60,
+    "events": 10,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     48,
+     54,
+     60
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "Q4 half EVAL_N=30": {
+    "epochs": 90,
+    "events": 30,
+    "first": [
+     3,
+     6,
+     9
+    ],
+    "last": [
+     84,
+     87,
+     90
+    ],
+    "gap_min": 3,
+    "gap_max": 3,
+    "ok": true
+   },
+   "Q4 half EVAL_N=None": {
+    "epochs": 90,
+    "events": 15,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     78,
+     84,
+     90
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "E1 prefix plan 0.5 h EVAL_N=30": {
+    "epochs": 60,
+    "events": 30,
+    "first": [
+     2,
+     4,
+     6
+    ],
+    "last": [
+     56,
+     58,
+     60
+    ],
+    "gap_min": 2,
+    "gap_max": 2,
+    "ok": true
+   },
+   "E1 prefix plan 0.5 h EVAL_N=None": {
+    "epochs": 60,
+    "events": 10,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     48,
+     54,
+     60
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "old 5.4 h EVAL_N=30": {
+    "epochs": 60,
+    "events": 30,
+    "first": [
+     2,
+     4,
+     6
+    ],
+    "last": [
+     56,
+     58,
+     60
+    ],
+    "gap_min": 2,
+    "gap_max": 2,
+    "ok": true
+   },
+   "old 5.4 h EVAL_N=None": {
+    "epochs": 60,
+    "events": 10,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     48,
+     54,
+     60
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   },
+   "1 h old EVAL_N=30": {
+    "epochs": 108,
+    "events": 30,
+    "first": [
+     4,
+     8,
+     11
+    ],
+    "last": [
+     101,
+     105,
+     108
+    ],
+    "gap_min": 3,
+    "gap_max": 4,
+    "ok": true
+   },
+   "1 h old EVAL_N=None": {
+    "epochs": 108,
+    "events": 18,
+    "first": [
+     6,
+     12,
+     18
+    ],
+    "last": [
+     96,
+     102,
+     108
+    ],
+    "gap_min": 6,
+    "gap_max": 6,
+    "ok": true
+   }
+  },
+  "ALL_OK": true
+ },
+ "ALL_OK": true
+}

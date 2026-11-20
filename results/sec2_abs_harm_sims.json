@@ -1,0 +1,52 @@
+{
+ "C40_speaker": {
+  "false_cert_at_0p5": 0.0235,
+  "false_cert_at_0p6": 0.01225,
+  "power_at_m0p5": 0.81625
+ },
+ "C40_seed": {
+  "false_cert_at_0p5": 0.04375,
+  "false_cert_at_0p6": 0.038,
+  "power_at_m0p5": 0.3465
+ },
+ "C40_interaction": {
+  "false_cert_at_0p5": 0.0235,
+  "false_cert_at_0p6": 0.005,
+  "power_at_m0p5": 0.99875
+ },
+ "C40_mixed": {
+  "false_cert_at_0p5": 0.0305,
+  "false_cert_at_0p6": 0.018,
+  "power_at_m0p5": 0.7535
+ },
+ "C10_speaker": {
+  "false_cert_at_0p5": 0.031,
+  "false_cert_at_0p6": 0.021,
+  "power_at_m0p5": 0.3275
+ },
+ "C10_seed": {
+  "false_cert_at_0p5": 0.04975,
+  "false_cert_at_0p6": 0.03175,
+  "power_at_m0p5": 0.33425
+ },
+ "C10_interaction": {
+  "false_cert_at_0p5": 0.02425,
+  "false_cert_at_0p6": 0.0075,
+  "power_at_m0p5": 0.784
+ },
+ "C10_mixed": {
+  "false_cert_at_0p5": 0.0305,
+  "false_cert_at_0p6": 0.01825,
+  "power_at_m0p5": 0.52075
+ },
+ "known_answers": {
+  "primary_win_harm_fail": true,
+  "harm_upper": [
+   -2.8423632735755664,
+   1.0162670306942905
+  ],
+  "refuses_4_pairs": true,
+  "adapter_checks": true
+ },
+ "PASS": true
+}

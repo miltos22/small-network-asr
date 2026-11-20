@@ -1,0 +1,33 @@
+{
+ "cleanS": {
+  "cpu": {
+   "PER": 29.56,
+   "hyp_ref": 0.93
+  },
+  "saved": {
+   "PER": 29.56,
+   "hyp_ref": 0.93
+  },
+  "diff": 0.0,
+  "n": 300,
+  "e": 10538,
+  "t": 35655,
+  "broken_control_fails": true
+ },
+ "libriA": {
+  "cpu": {
+   "PER": 46.7,
+   "hyp_ref": 0.873
+  },
+  "saved": {
+   "PER": 46.7,
+   "hyp_ref": 0.873
+  },
+  "diff": 0.0,
+  "n": 300,
+  "e": 8261,
+  "t": 17689,
+  "broken_control_fails": true
+ },
+ "verdict": "PASS"
+}

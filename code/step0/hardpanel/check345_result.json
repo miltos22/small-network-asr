@@ -1,0 +1,1539 @@
+{
+ "check3": {
+  "known_answer": [
+   {
+    "i": 0,
+    "utt": "1272-128104-0000.flac",
+    "equal": true
+   },
+   {
+    "i": 988,
+    "utt": "2803-154328-0009.flac",
+    "equal": true
+   },
+   {
+    "i": 1976,
+    "utt": "6295-64301-0032.flac",
+    "equal": true
+   }
+  ],
+  "extractor_code": {
+   "base5_prep.py": {
+    "sha256": "68e404e4c664f2f44aa1c6932a2d20564eaf76556daf1bd8918215cc0045a6a5",
+    "mtime": "2026-11-14T17:53:26",
+    "before_cutoff": true
+   },
+   "bb142.py": {
+    "sha256": "3784e64f0e5ef8083591771cde0e0e51998938ecced9d4e0429a33023df220e0",
+    "mtime": "2026-11-11T15:30:11",
+    "before_cutoff": true
+   },
+   "frontend.py": {
+    "sha256": "de1633cbdfb0de7cdc7413d6699dceb2dc7ef5b9c10ad69981dec3a0d3daf1da",
+    "mtime": "2026-11-05T04:42:45",
+    "before_cutoff": true
+   }
+  },
+  "PASS": true
+ },
+ "check5": {
+  "entries": [
+   "code/base6.py",
+   "code/base6s.py",
+   "code/base6s_R.py",
+   "code/base6sy.py",
+   "code/phase0_beam.py",
+   "code/p2iv_lm.py",
+   "code/vtln_self.py",
+   "code/vtln_tc100.py",
+   "code/aug2a.py",
+   "code/d1_punits.py",
+   "code/step0/reader_v65.py",
+   "code/step0/score_locked.py",
+   "code/logs_2c/run2/struct2c_AS_RUN.py",
+   "code/small_net/cifar_q1.py"
+  ],
+  "closure": {
+   "af.py": {
+    "deps": [],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "align.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py"
+    ],
+    "data_literals": [
+     "data/cmudict/cmudict.dict",
+     "Our own forced aligner (no external tools): transcript -> CMUdict phones -> left-to-right chain of phone substates with\noptional silence between words -> Viterbi over Module 2's state scores. Output = phone segments like the LibriSpeech alignments.\nUsed to label his non-test recordings; his 10 test clips are never aligned or used for calibration."
+    ],
+    "other500_ref": false
+   },
+   "aug2a.py": {
+    "deps": [],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "base5.py": {
+    "deps": [],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "data/cache"
+    ],
+    "other500_ref": false
+   },
+   "base5_next.py": {
+    "deps": [
+     "code/aug2a.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "/noise_esc50_f1234.npz",
+     "data/cache",
+     "_X.f16",
+     "_meta.npz"
+    ],
+    "other500_ref": false
+   },
+   "base6.py": {
+    "deps": [
+     "code/base5_next.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "/base5_devother_meta.npz",
+     "/base5_speakers.json",
+     "scratch/base6"
+    ],
+    "other500_ref": false
+   },
+   "base6s.py": {
+    "deps": [
+     "code/base5_next.py",
+     "code/base6.py",
+     "code/labels2c.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "/logs_base6/base6s_budget.json"
+    ],
+    "other500_ref": false
+   },
+   "base6s_R.py": {
+    "deps": [
+     "code/base6s.py"
+    ],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "base6sy.py": {
+    "deps": [
+     "code/base6s.py"
+    ],
+    "data_literals": [
+     ".json",
+     "/logs_base6/base6s_budget.json",
+     "/logs_base6/base6sy_budget_GT.json",
+     "/logs_base6/base6sy_budget_TN.json",
+     "/logs_base6/base6sy_budget_TSN.json",
+     "Top-only readouts at equal bytes: shared vs private nonlinear correction (EXPLORATION). Written 18 Nov 2026 ~20:1x by the agent (reviewer 5.5).\nSource: review council 18 Nov (all 3: \"decisive next control is a byte-matched top-only shared head\") + reviewer Q8 test 2 (add private narrowed to the\nshared width = containment at equal width). Checks in council_2026-11-18/COUNCIL_CHECK.md, Q7_Q8_CHECK.md.\nAll arms: base6 trunk w 232, linear skip Linear(w, 55) + a separate linear blank Linear(w, 1) (S's blank parameterisation, so blank paths match),\none nonlinear bank h1 = Linear(w, U) reading ONLY the trunk top g, GELU, h2 = Linear(U, 54) writing the 54 nonblank outputs (blank stays linear, as S).\nHeads exist for the auxiliary teaching loss only (same AUXW as S and G) and are dropped at export (subclass of ArmG, as G).\n  TS  shared:  h2 dense. U fitted to S's exported bytes.\n  TP  private: h2 block-diagonal, output k reads only its own group (np.array_split of U over 54). U fitted to S's bytes.\n  TN  private narrowed to TS's U (fewer bytes; equal width and inputs: the containment comparison).\nInit: nn.Linear default, except the surviving h2 weights of TP/TN are redrawn for their TRUE fan-in (uniform +-1/sqrt(group size)), so the private\nbranch is not ~sqrt(54) quieter at the start (reviewer Q2 / council: spec2 started 7.35x small).\nKnown answers (selftest): TS has zero structural zeros; TP/TN masks block-diagonal with every output >= 1 unit; TS / TP bytes within 0.5 % of S;\na TP forward with an off-block h1 unit perturbed leaves every other output's logit unchanged.\nUsage: python3 -I base6sy.py <TS|TP|TN> <tag> <seed> <epochs>; base6sy.py bytes (writes logs_base6/base6sy_budget_<A>.json)."
+    ],
+    "other500_ref": false
+   },
+   "bb142.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones46.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "/budget.json",
+     "exp142 black box: 80 log-mel -> conv (stride 2) -> BiGRU -> 39 phones + blank, CTC, greedy decode (DESIGN_exp142.md).\nSame audio, labels and refs as the kept system: fit/cal = phones.split() files with ph_{fit,cal}.npz labels; eval sets = realcut_*.npz\nfiles + segs labels (the exact refs phones46.run_set scores, phones46.py:28). Scorer = p44.edit, PER = sum edits / sum ref length.\nUsage: bb142.py feats                                   (build the log-mel caches)\n       bb142.py train SHAPE LR SEED EVALSETS [EPOCHS]  (SHAPE wide2 | narrow3; EVALSETS comma list, first = early-stop set)\nEnv: SHUF=1 shuffles label sequences across training utterances (broken control); PARAMS overrides the budget.\nRECIPE=b0 (exp143): standard extras = SpecAugment (2 freq masks <= 15 of 80, 2 time masks <= min(40, 10 % of length)), AdamW wd 1e-2,\naverage of the 3 best libriA checkpoints (kept only if it is not worse on the early-stop set).\nCTX=k (exp144, node P2): the model sees each TRUE segment alone plus k frames each side (k=0: no cross-segment context); outputs are\ntaken only for the segment's own frames and concatenated per utterance, CTC on the utterance. Uses true cuts at test time too. fp32 only."
+    ],
+    "other500_ref": false
+   },
+   "bnd.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones19.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/bnd.json",
+     "/bnd_model.npy"
+    ],
+    "other500_ref": false
+   },
+   "d1_punits.py": {
+    "deps": [
+     "code/af.py",
+     "code/bb142.py",
+     "code/d1_views.py",
+     "code/phones.py",
+     "code/phones12.py"
+    ],
+    "data_literals": [
+     "/ph_fit.npz",
+     "/trk31_fit.npy"
+    ],
+    "other500_ref": false
+   },
+   "d1_views.py": {
+    "deps": [
+     "code/bb142.py"
+    ],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "frontend.py": {
+    "deps": [],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "gate.py": {
+    "deps": [
+     "code/frontend.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".json",
+     ".npy",
+     ".npz",
+     ".wav",
+     "/ESC-50-master/meta/esc50.csv",
+     "/LibriSpeech",
+     "/LibriSpeech/dev-clean/*/*/*.flac",
+     "/LibriSpeech/test-clean/*/*/*.flac",
+     "/dict_0604/dictations/*.wav",
+     "/hfd/*.wav",
+     "/hotword_1999.wav",
+     "data/raw/listening_cue.wav",
+     "data/cache",
+     "data"
+    ],
+    "other500_ref": false
+   },
+   "labels2c.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".npz",
+     "/LibriSpeech",
+     "data/cache",
+     "Arm 2c labels (ARM_2c_DESIGN_2026-11-15.md section 3): variant token sequences (spec 4d: 39 phonemes -> 53 tokens + SIL) and\nper-frame phone labels for the split heads, for the 5.4 h training pool (fit + cal, the base5 utterance order).\nVariants are set by RULES FROM CONTEXT on the MFA alignment (phones with stress digits + word tier); the audio is not inspected.\nHard check: every variant sequence, with SIL removed and each token mapped back to its 39-phone spelling, must equal the base5 label\nsequence of the same utterance exactly (base5_{fit,cal}.npz y_i). Any mismatch aborts.\nFrame labels: ph_{fit,cal}.npz 'ph' (39 = silence, -1 = unknown) cut to base5 frame counts (diff <= 3 frames; missing tail = -1).\nWrites cache/v2c_{fit,cal}.npz: y0..y{n-1} (variant ids, int16), n, f (frame labels, int8, concatenated), flens.\nUsage: python3 labels2c.py [selftest]"
+    ],
+    "other500_ref": false
+   },
+   "lattice.py": {
+    "deps": [],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "logs_2c/run2/af.py": {
+    "deps": [],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "logs_2c/run2/base5_next.py": {
+    "deps": [
+     "code/aug2a.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "/noise_esc50_f1234.npz",
+     "data/cache",
+     "_X.f16",
+     "_meta.npz"
+    ],
+    "other500_ref": false
+   },
+   "logs_2c/run2/labels2c.py": {
+    "deps": [
+     "code/logs_2c/run2/af.py",
+     "code/phones.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".npz",
+     "/LibriSpeech",
+     "data/cache",
+     "Arm 2c labels (ARM_2c_DESIGN_2026-11-15.md section 3): variant token sequences (spec 4d: 39 phonemes -> 53 tokens + SIL) and\nper-frame phone labels for the split heads, for the 5.4 h training pool (fit + cal, the base5 utterance order).\nVariants are set by RULES FROM CONTEXT on the MFA alignment (phones with stress digits + word tier); the audio is not inspected.\nHard check: every variant sequence, with SIL removed and each token mapped back to its 39-phone spelling, must equal the base5 label\nsequence of the same utterance exactly (base5_{fit,cal}.npz y_i). Any mismatch aborts.\nFrame labels: ph_{fit,cal}.npz 'ph' (39 = silence, -1 = unknown) cut to base5 frame counts (diff <= 3 frames; missing tail = -1).\nWrites cache/v2c_{fit,cal}.npz: y0..y{n-1} (variant ids, int16), n, f (frame labels, int8, concatenated), flens.\nUsage: python3 labels2c.py [selftest]"
+    ],
+    "other500_ref": false
+   },
+   "logs_2c/run2/struct2c_AS_RUN.py": {
+    "deps": [
+     "code/logs_2c/run2/base5_next.py",
+     "code/logs_2c/run2/labels2c.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt"
+    ],
+    "other500_ref": false
+   },
+   "p2iv_lm.py": {
+    "deps": [
+     "code/base5_next.py",
+     "code/base6.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".npz",
+     ".pt",
+     "scratch/p2iv"
+    ],
+    "other500_ref": false
+   },
+   "phase0_beam.py": {
+    "deps": [
+     "code/base5_next.py",
+     "code/phase0_score.py"
+    ],
+    "data_literals": [
+     ".npz",
+     "/logs_base5/phase0_beam_2026-11-17.json"
+    ],
+    "other500_ref": false
+   },
+   "phase0_score.py": {
+    "deps": [
+     "code/base5_next.py"
+    ],
+    "data_literals": [
+     ".npz",
+     ".pt",
+     "Phase 0b / 0e / 0f input (docs/PLAN.md section 2): rescore saved checkpoints on clean / hard / his voice, CPU, inference only.\nPer (model, set): greedy PER with sub / del / ins, hyp/ref, per-utterance (edits, ref phones, sub, del, ins) for the speaker bootstrap (0g).\nLog-probabilities (float16) are cached for the first seed of each family (0e beam, 0f deletion positions) under CACHE/phase0_lp/.\nResumable: one JSON line per (model, set) in logs_base5/phase0_score.jsonl; done pairs are skipped.\nOrder: cleanS + him for every model first (new information), then the hard sets.\nEXPLORATION. cleanS is TRAINING-speaker data for base100 (the 100 h model).\nUsage: python3 phase0_score.py   (nice 19, 2 threads)"
+    ],
+    "other500_ref": false
+   },
+   "phones.py": {
+    "deps": [
+     "code/af.py",
+     "code/frontend.py",
+     "code/gate.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".npz",
+     "/LibriSpeech",
+     "/LibriSpeech/dev-clean/*/*/*.flac",
+     "/LibriSpeech/test-clean/*/*/*.flac",
+     "/eval.json",
+     "/model.npy",
+     "data/cache",
+     "Module 2: 22 articulatory-feature detectors (closed-form shrunk Gaussians on masked inputs + Platt) and the\nphone-state composer (LDA on the 22 clipped log-odds: w = S^-1 mu, the decorrelated GLS of DESIGN v2).\nData: LibriSpeech dev-clean (30 speakers fit detectors, 10 speakers calibrate + fit composer), test-clean (40 unseen speakers) test.\nPass marks fixed BEFORE results (DESIGN v2, reviewer's estimates):\n  2. detector AUROC mean >= 0.85, none < 0.75 (test-clean)\n  3. oracle-segmented phone accuracy top-1 >= 65 %, top-3 >= 86 % (test-clean)\nUsage: python phones.py build | fit | eval"
+    ],
+    "other500_ref": false
+   },
+   "phones10.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones3.py",
+     "code/phones5.py",
+     "code/phones6.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/eval_posttrain.json",
+     "/model.npy",
+     "/segmel_cal.npy"
+    ],
+    "other500_ref": false
+   },
+   "phones11.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones3.py",
+     "code/phones8.py"
+    ],
+    "data_literals": [
+     ".npy",
+     "/LibriSpeech/dev-other/*/*/*.flac"
+    ],
+    "other500_ref": false
+   },
+   "phones12.py": {
+    "deps": [
+     "code/af.py",
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones11.py",
+     "code/phones3.py",
+     "code/phones8.py"
+    ],
+    "data_literals": [
+     ".npy",
+     "/LibriSpeech/dev-other/*/*/*.flac"
+    ],
+    "other500_ref": false
+   },
+   "phones13.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones11.py",
+     "code/phones12.py",
+     "code/phones3.py",
+     "code/phones8.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/seg13.npz"
+    ],
+    "other500_ref": false
+   },
+   "phones14.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py",
+     "code/phones10.py",
+     "code/phones3.py"
+    ],
+    "data_literals": [
+     "/seg13.npz"
+    ],
+    "other500_ref": false
+   },
+   "phones15.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones11.py",
+     "code/phones12.py",
+     "code/phones13.py",
+     "code/phones14.py",
+     "code/phones3.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac"
+    ],
+    "other500_ref": false
+   },
+   "phones16.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones16.json"
+    ],
+    "other500_ref": false
+   },
+   "phones19.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones14.py",
+     "code/phones15.py",
+     "code/phones16.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones19.json"
+    ],
+    "other500_ref": false
+   },
+   "phones2.py": {
+    "deps": [
+     "code/af.py",
+     "code/frontend.py",
+     "code/phones.py"
+    ],
+    "data_literals": [
+     "/eval_composer.json",
+     "/model.npy"
+    ],
+    "other500_ref": false
+   },
+   "phones23.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones14.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones23.json"
+    ],
+    "other500_ref": false
+   },
+   "phones24.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones23.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones24.json"
+    ],
+    "other500_ref": false
+   },
+   "phones25.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones23.py",
+     "code/phones24.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones25.json"
+    ],
+    "other500_ref": false
+   },
+   "phones27.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones24.py",
+     "code/phones25.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     "/LibriSpeech",
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones27.json"
+    ],
+    "other500_ref": false
+   },
+   "phones28.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones23.py",
+     "code/phones25.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones28.json"
+    ],
+    "other500_ref": false
+   },
+   "phones3.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py",
+     "code/phones2.py"
+    ],
+    "data_literals": [
+     "/eval_segmental.json",
+     "/model.npy"
+    ],
+    "other500_ref": false
+   },
+   "phones32.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones27.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones32.json"
+    ],
+    "other500_ref": false
+   },
+   "phones33.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones24.py",
+     "code/phones25.py",
+     "code/phones28.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones33.json"
+    ],
+    "other500_ref": false
+   },
+   "phones34.py": {
+    "deps": [
+     "code/af.py",
+     "code/align.py",
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones14.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones27.py"
+    ],
+    "data_literals": [
+     ".flac",
+     "/model.npy",
+     "/phones34_him.json",
+     "Step 5a: his 10 clips, dictionary labels timed by our aligner, current hybrid r76 model (LibriSpeech cal only). NIGHT_REPORT step 5."
+    ],
+    "other500_ref": false
+   },
+   "phones38.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones24.py",
+     "code/phones25.py",
+     "code/phones33.py",
+     "code/phones8.py"
+    ],
+    "data_literals": [
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/phones38.json"
+    ],
+    "other500_ref": false
+   },
+   "phones39.py": {
+    "deps": [
+     "code/align.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones24.py",
+     "code/phones25.py",
+     "code/phones32.py",
+     "code/phones33.py",
+     "code/phones34.py",
+     "code/phones38.py",
+     "code/phones8.py"
+    ],
+    "data_literals": [
+     ".flac",
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/model.npy",
+     "/phones39.json"
+    ],
+    "other500_ref": false
+   },
+   "phones4.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones2.py",
+     "code/phones3.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".npy",
+     "/LibriSpeech",
+     "/eval_channels.json",
+     "/model.npy"
+    ],
+    "other500_ref": false
+   },
+   "phones42.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones32.py",
+     "code/phones33.py",
+     "code/phones38.py",
+     "code/phones39.py",
+     "code/phones8.py",
+     "code/segdec.py"
+    ],
+    "data_literals": [
+     ".flac",
+     ".npz",
+     "/phones42.json"
+    ],
+    "other500_ref": false
+   },
+   "phones44.py": {
+    "deps": [
+     "code/af.py",
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones32.py",
+     "code/phones33.py",
+     "code/phones39.py",
+     "code/phones42.py",
+     "code/phones8.py",
+     "code/segdec.py"
+    ],
+    "data_literals": [
+     ".flac",
+     ".npz",
+     "/model.npy",
+     "/phones44.json"
+    ],
+    "other500_ref": false
+   },
+   "phones46.py": {
+    "deps": [
+     "code/bnd.py",
+     "code/frontend.py",
+     "code/lattice.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones13.py",
+     "code/phones15.py",
+     "code/phones16.py",
+     "code/phones19.py",
+     "code/phones3.py",
+     "code/phones32.py",
+     "code/phones38.py",
+     "code/phones39.py",
+     "code/phones42.py",
+     "code/phones44.py",
+     "code/phones51.py",
+     "code/phones8.py"
+    ],
+    "data_literals": [
+     ".flac",
+     ".npz",
+     "/bnd_model.npy",
+     "/mod_m39_g0.pkl",
+     "/model.npy",
+     "/phones44.json",
+     "/phones46.json"
+    ],
+    "other500_ref": false
+   },
+   "phones5.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones3.py",
+     "code/phones4.py"
+    ],
+    "data_literals": [
+     ".npy",
+     ".npz",
+     "/LibriSpeech/test-other/*/*/*.flac",
+     "/eval_test_other.json",
+     "/model.npy",
+     "/segmel_cal.npy",
+     "Robustness test: the current best phoneme module (SEGALL = detectors + 108 measurements + 40 mel, segmental LDA; and SEG108\ncontrol), calibrated exactly as before (dev-clean only), run ONCE on LibriSpeech test-other (harder speakers / recordings).\nCompare to test-clean: SEGALL 61.4 / 87.7, SEG108 57.4 / 85.2."
+    ],
+    "other500_ref": false
+   },
+   "phones51.py": {
+    "deps": [
+     "code/frontend.py",
+     "code/phones.py",
+     "code/phones12.py",
+     "code/phones15.py",
+     "code/phones42.py",
+     "code/phones44.py",
+     "code/phones46.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".npz",
+     "/LibriSpeech",
+     "/cutter51.npy",
+     "/model.npy",
+     "/phones51.json"
+    ],
+    "other500_ref": false
+   },
+   "phones6.py": {
+    "deps": [
+     "code/phones.py",
+     "code/phones3.py",
+     "code/phones5.py"
+    ],
+    "data_literals": [
+     ".npy",
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/eval_layer2.json",
+     "/model.npy",
+     "/segmel_cal.npy"
+    ],
+    "other500_ref": false
+   },
+   "phones8.py": {
+    "deps": [
+     "code/af.py",
+     "code/phones.py",
+     "code/phones3.py",
+     "code/phones5.py",
+     "code/phones6.py"
+    ],
+    "data_literals": [
+     ".TextGrid",
+     ".flac",
+     ".npy",
+     "/LibriSpeech",
+     "/LibriSpeech/dev-other/*/*/*.flac",
+     "/eval_split.json",
+     "/model.npy",
+     "/segmel_cal.npy"
+    ],
+    "other500_ref": false
+   },
+   "segdec.py": {
+    "deps": [
+     "code/phones19.py"
+    ],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "step0/gpu_gate2.py": {
+    "deps": [],
+    "data_literals": [
+     "/approved.json",
+     "/ledger.json",
+     "GPU cap gate v2 (Part C v6.5; review round 5 C5.7). Replaces gpu_gate.py for every GPU job. The cap comes from the APPROVAL record, the\ncommitments from the APPROVED LEDGER, never from the caller.\n\nFiles (default in this folder):\n  approved.json   {cap_h, option, ledger_path, ledger_sha256, reserve_frac}  written when the author approves; ABSENT = every job refused.\n  gpu_spend.jsonl events {ev: \"hist\"|\"begin\"|\"charge\", job, gpu_h?, t?, interrupted?}; ABSENT = refused. Seeded with the historical spend.\nRule for job J (a row key of the approved ledger, scope inside the approved option):\n  need = spent(all charges) + allowance(J) + (1 + reserve_frac) * sum(expected_gpu_h of every approved row not yet charged, J excluded)\n  need <= cap_h, else refused. allowance(J) = the row's worst_gpu_h (the job runs under that hard timeout).\nRefused also: ledger file digest != approved; J not an approved row / out of scope; J already charged; any job begun and not charged\n(one GPU job at a time; run `recover` first); a caller cannot pass cap, allowance or commitments (no such arguments exist).\n`run J -- cmd ...` = check, begin, run cmd under `timeout allowance`, charge exactly once (interrupted if rc != 0 or timeout).\n`recover` charges every begun-but-uncharged job at min(allowance, now - begin) as INTERRUPTED; interrupted jobs are never scoring-eligible\n(`eligible J` returns False). Runners must launch GPU work only through `run` (audit: grep the runner for 'gpu_gate2.py run').",
+     "no approval record (approved.json): every GPU job refused"
+    ],
+    "other500_ref": false
+   },
+   "step0/reader_v65.py": {
+    "deps": [
+     "code/base5_next.py",
+     "code/base6.py",
+     "code/base6s.py",
+     "code/base6s_R.py",
+     "code/step0/gpu_gate2.py",
+     "code/small_net/sec2_q2c_entry.py"
+    ],
+    "data_literals": [
+     ".access.json",
+     ".bind.json",
+     ".flac",
+     ".json",
+     ".npz",
+     ".pt",
+     ".register.json",
+     ".released.json",
+     "/S0.json",
+     "/S1.pt",
+     "/crash.json",
+     "/drop.json",
+     "/pX.access.json",
+     "/pX.release.json",
+     "/panel.npz",
+     "/proto.json",
+     "/proto2.json",
+     "/proto3.json",
+     "/proto4.json",
+     "/proto5.json",
+     "/reader_v65_selftest_2026-11-20.json",
+     "data/cache/base5_",
+     "Controlled reader for SEALED panels: REGISTER / BIND / RELEASE (MASTER_PLAN Part C v6.5 C9 2). Fail closed everywhere.\n\nREGISTER (before a comparison's first run): register(reg_name, protocol_path) writes locks/<reg_name>.register.json with the protocol sha256\n  and appends it to locks/REGISTRY.jsonl. Refused if any panel the protocol names already has an access record (every comparison that will\n  use a panel must be registered before that panel's first release). Protocol fields used here: arms, seeds, panels[{name, set_file,\n  set_sha256, items[{utt, speaker, t}], release_path}]. (sec2_q2c_entry.py reads the same protocol and the release records.)\nBIND (after training): bind(reg_name, slots) with slots = {arm: {seed: pt_path}}: exactly the protocol's arms x seeds; each checkpoint and\n  its run json are hashed; the run must be complete (len(log) == epochs, no stop_after) and its GPU job eligible (gpu_gate2.eligible) unless\n  the slot is listed in the protocol's 'legacy_slots' (old runs from before the gate; recorded as such). Written once (O_EXCL).\nRELEASE (once per panel): release(panel) finds every registration naming the panel; each must be bound. It creates the ACCESS record\n  locks/<panel>.access.json with O_EXCL BEFORE any model reads the set (a second or concurrent release fails there); then scores every\n  bound slot, each in a FRESH python process whose recipe environment (RIGHT, NORM, FEAT, WARP, RWIRE_SEED) is set from the run's own\n  config before import, using the training script's own evaluate(..., items=True) (parity by construction); the child re-hashes the\n  checkpoint and asserts RIGHT, NORM, budget and frozen-tree string equal the run config. Rows {panel, arm, seed, utt, speaker, e, t, h}\n  are checked against the protocol items (same utts, speakers, reference counts) and written once per registration; then the release\n  record (panel, items_sha256 = sec2_q2c_entry.items_digest, rows sha256, bind sha256) is written once. A crash after the access record\n  and before the release record leaves the panel COMPROMISED: release refuses forever; the owner decides (no silent retry).\nRecipes the child cannot reproduce exactly are REFUSED: FEAT != '' (feature copies), WARP != '' (needs the panel's own warp estimates,\n  realization 134; adapter TO DO for Q4), NORM fixed (statistics not in the checkpoint).\nUsage: python -I reader_v65.py selftest | parity <tag> <set> | register <name> <protocol> | bind <name> <slots.json> | release <panel>"
+    ],
+    "other500_ref": false
+   },
+   "step0/score_locked.py": {
+    "deps": [
+     "code/base5_next.py",
+     "code/base6.py",
+     "code/base6s.py"
+    ],
+    "data_literals": [
+     ".json",
+     ".lock.json",
+     ".pt",
+     ".scores.json",
+     "/C.json",
+     "/C.pt",
+     "/LOCKS.txt",
+     "/base5_cleanT.npz",
+     "/logs_base6/base6s_budget.json",
+     "data/cache/sealed",
+     "/spec.json",
+     "Locked scorer for SEALED test sets (MASTER_PLAN Part C v6.3 C2.0; review round 3 C2.0 / C5.4). The ONLY code path that reads a sealed set.\nTraining scripts (base6.py / base6s.py) score validation sets only (EVALSETS allowlist) and cannot load sealed files: the sealed caches live in\ncache/sealed/, outside the path base5_next.load() reads.\n\nProtocol (all asserted, fail closed):\n1. A LOCK file step0/locks/<question>.lock.json is written BEFORE any sealed access (make_lock): question id, the comparison (arm -> list of\n   model .pt paths with sha256 and their run json), the sealed set name + sha256 of its cache file, the statistic, and the lock's own sha256\n   recorded in step0/locks/LOCKS.txt (append-only). A lock cannot be rewritten (exists -> refuse).\n2. score <lock>: re-hash every model and the set; any mismatch -> refuse. Every model of the lock is scored in one call (no partial opening);\n   a (lock, model sha) pair already in step0/locks/SCORED.jsonl -> refuse (one locked pass per model and set).\n3. Output: per-utterance edits e, reference length t, hypothesis length h, utterance id; totals; written next to the lock as\n   <question>.scores.json (exists -> refuse). Scoring runs on the CPU in float32 with the same decode as the training script's evaluate().\nModels: base6 plain (config without 'arm', NORM must be causal: fixed-norm statistics are not saved in the .pt) and base6s arms (make(arm, bud)).\nUsage: python -I score_locked.py selftest | lock <spec.json> | score <question>      (CPU venv with torch; no GPU).",
+     "base5_cleanT.npz"
+    ],
+    "other500_ref": true
+   },
+   "vtln_self.py": {
+    "deps": [
+     "code/aug2a.py",
+     "code/base5.py",
+     "code/base5_next.py",
+     "code/base6.py"
+    ],
+    "data_literals": [
+     ".npz",
+     ".pt",
+     "/base5_fit.npz",
+     "/phones_out/base5/base_P655924_s0.pt",
+     "/vtln_libriA.npz",
+     "Self-scored warp (18 Nov, reviewer; EXPLORATION after 2-I / 2aW_): the same unsupervised VTLN rule as vtln_grid.py (per utterance and alpha in\nGRID: mean negative entropy of the model's output on the warped input; alpha = argmax of the summed scores of the speaker's OTHER utterances),\nbut the SCORER is base6 itself (default e60_r12_causal_s0, plain), not the stage-1a base5 model: on the phone no second model would be needed.\nWrites cache/vtln_S_{set}.npz (alpha, scores, grid, spk; spk copied from vtln_{set}.npz). Known answer: the scores of the stage-1a scorer\nre-computed here for 20 libriA utts with this code path equal vtln_libriA.npz scores (atol 1e-3), so the only change is the scorer.\nGPU (python3, python -I, under the GPU lock). Usage: RIGHT=12 NORM=causal python -I vtln_self.py",
+     "known answer: old scorer via this path, max |diff| vs vtln_libriA.npz"
+    ],
+    "other500_ref": false
+   },
+   "vtln_tc100.py": {
+    "deps": [
+     "code/aug2a.py",
+     "code/base5.py",
+     "code/base5_next.py"
+    ],
+    "data_literals": [
+     ".npz",
+     "/phones_out/base5/base_P655924_s0.pt",
+     "/vtln_libriA.npz",
+     "Warp alphas for train-clean-100 (19 Nov, reviewer; plan step a: warp + noise recipe at 2 MB / 100 h). CALIBRATION.\nSame rule and scorer as vtln_grid.py / WARP=W (stage-1a base5 0.66 MB s0; mean negative entropy per alpha on GRID 0.80-1.20 step 0.04;\nspeaker alpha = argmax of the summed scores), run on the GPU batched over the grid (vtln_self.py path, known answer below).\nOne deviation, for cost: only PER_SPK utterances per speaker (seeded) are scored at each speed; a scored utterance gets the leave-one-out\nalpha of its speaker's other scored utterances (as vtln_grid), an unscored one the argmax of all scored ones. Writes cache/vtln_tc100{,_sp0.9,_sp1.1}.npz\n(alpha, scores of the scored rows, scored, spk, grid). Known answer: this path reproduces vtln_libriA.npz scores on 20 utts (atol 1e-3).\nUsage: RIGHT=12 python3 -I vtln_tc100.py [sets...]   env PER_SPK (default 20), LIMIT (score only the first N speakers: smoke)",
+     "_X.f16",
+     "_meta.npz",
+     "known answer: max |diff| vs vtln_libriA.npz"
+    ],
+    "other500_ref": false
+   },
+   "../small_net/cifar_q1.py": {
+    "deps": [],
+    "data_literals": [
+     "scratch/cifar100",
+     "cifar100_splits.npz"
+    ],
+    "other500_ref": false
+   },
+   "../small_net/sec2_abs.py": {
+    "deps": [],
+    "data_literals": [],
+    "other500_ref": false
+   },
+   "../small_net/sec2_q2c_entry.py": {
+    "deps": [
+     "code/small_net/sec2_abs.py"
+    ],
+    "data_literals": [],
+    "other500_ref": false
+   }
+  },
+  "PASS": false
+ },
+ "check4": {
+  "cutoff": "2026-11-20T01:37:00",
+  "code": {
+   "af.py": {
+    "sha256": "2f697335ef824e0e3978432698c6c28c4f3543736fdeff082abf70e772fe3686",
+    "mtime": "2026-11-05T03:58:07",
+    "before_cutoff": true
+   },
+   "align.py": {
+    "sha256": "0635f4614830bd23a6d734e53c6cf4aa52f738e10ffa41112d3f702a0575786c",
+    "mtime": "2026-11-05T04:07:30",
+    "before_cutoff": true
+   },
+   "aug2a.py": {
+    "sha256": "9b597a1b886a3b1d12cead4d9b81525cd31390bfd115be5743c94746f5326263",
+    "mtime": "2026-11-15T02:06:55",
+    "before_cutoff": true
+   },
+   "base5.py": {
+    "sha256": "ae54aa25a6dc351e5fa31527266ea0e2e5ca58ac7629924028a2361afc8f2fbb",
+    "mtime": "2026-11-14T18:00:24",
+    "before_cutoff": true
+   },
+   "base5_next.py": {
+    "sha256": "cd551c8b9f878cf5a85d4a87b997abd6d24af522f2e5adcb65e8618fd23e0280",
+    "mtime": "2026-11-18T01:18:29",
+    "before_cutoff": true
+   },
+   "base6.py": {
+    "sha256": "931eaf8ee140254605ce2a2c79ae936aa466132e4a684fc1c4464526ba677574",
+    "mtime": "2026-11-20T03:58:08",
+    "before_cutoff": false,
+    "amended_rule": {
+     "backup": "base6.py.bak_preAllow_2026-11-20",
+     "backup_mtime": "2026-11-20T01:34:44",
+     "changed_lines": 25,
+     "other500_in_diff": false,
+     "numeric_lines": [
+      "-    m.eval(); e = t = h = 0; ix = range(len(X)) if n is None else np.random.default_rng(7).choice(len(X), n, replace=False)",
+      "+    m.eval(); e = t = h = 0; it = []; ix = range(len(X)) if n is None else np.random.default_rng(7).choice(len(X), n, replace=False)",
+      "-    return dict(PER=round(100 * e / t, 2), hyp_ref=round(h / t, 3))",
+      "+    r = dict(PER=round(100 * e / t, 2), hyp_ref=round(h / t, 3))",
+      "+        assert sum(x[1] for x in it) == e and sum(x[2] for x in it) == t and sum(x[3] for x in it) == h and len(it) == len(ix)",
+      "-    Y = V[\"1.0\"][1]; N = len(Y); E = {s_: B.load(s_) for s_ in (\"libriA\", \"cleanS\", \"libriB\", \"testother\", \"author2\", \"him\")}; E[\"fit\"] = V[\"1.0\"]",
+      "+    Y = V[\"1.0\"][1]; N = len(Y); E = {s_: B.load(s_) for s_ in EVALSETS if s_ != \"fit\"}; E[\"fit\"] = V[\"1.0\"]",
+      "-        R[\"sets\"][s_] = evaluate(m, *E[s_], dev, 300 if s_ == \"fit\" else None); print(s_, R[\"sets\"][s_], flush=True)",
+      "+        R[\"sets\"][s_] = evaluate(m, *E[s_], dev, 300 if s_ == \"fit\" else None, items=True)"
+     ],
+     "PASS": true
+    }
+   },
+   "base6s.py": {
+    "sha256": "97c069c02d7ba65510227dcf28ac9e61901dccd2d800303817c401ceee34a88c",
+    "mtime": "2026-11-20T07:30:59",
+    "before_cutoff": false,
+    "amended_rule": {
+     "backup": "base6s.py.bak_preAllow_2026-11-20",
+     "backup_mtime": "2026-11-20T01:34:44",
+     "changed_lines": 55,
+     "other500_in_diff": false,
+     "numeric_lines": [
+      "-    m.eval(); e = t = h = 0; ix = range(len(X)) if n is None else np.random.default_rng(7).choice(len(X), min(n, len(X)), replace=False)",
+      "+    m.eval(); e = t = h = 0; it = []; ix = range(len(X)) if n is None else np.random.default_rng(7).choice(len(X), min(n, len(X)), replace=False)",
+      "-    return dict(PER=round(100 * e / t, 2), hyp_ref=round(h / t, 3))",
+      "+    r = dict(PER=round(100 * e / t, 2), hyp_ref=round(h / t, 3))",
+      "+        assert sum(x[1] for x in it) == e and sum(x[2] for x in it) == t and sum(x[3] for x in it) == h and len(it) == len(ix)",
+      "-               train_h=round(sum(len(x) for x in V[\"1.0\"][0]) / 360000, 3), frozen_tree=FROZEN)",
+      "+               train_h=round(sum(len(x) for x in V[\"1.0\"][0]) / 360000, 3), frozen_tree=FROZEN,",
+      "+        return hh.hexdigest()[:16]",
+      "+    def _h(sd): hh = hashlib.sha256(); [hh.update(k.encode() + v.detach().cpu().contiguous().numpy().tobytes()) for k, v in sd.items()]; return hh.hexdigest()[:16]",
+      "+            if BROKEN: torch.rand(1); rng.random()",
+      "-        if SMOKE or ((ep + 1) % B6.CKPT_EVERY and ep + 1 != epochs): continue",
+      "+        if SMOKE or STOP_AFTER or ((ep + 1) % B6.CKPT_EVERY and ep + 1 != epochs): continue",
+      "-        R[\"sets\"][s_] = evaluate(arm, m, *E[s_], dev, 300 if s_ == \"fit\" else None); print(s_, R[\"sets\"][s_], flush=True)",
+      "+        R[\"sets\"][s_] = evaluate(arm, m, *E[s_], dev, 300 if s_ == \"fit\" else None, items=True)"
+     ],
+     "PASS": true
+    }
+   },
+   "base6s_R.py": {
+    "sha256": "891842c37c341182cb6960a2b9ead576906968dc20124b388df52e3d0df98001",
+    "mtime": "2026-11-20T07:30:59",
+    "before_cutoff": false,
+    "amended_rule": {
+     "PASS": false,
+     "reason": "no backup older than the cutoff"
+    }
+   },
+   "base6sy.py": {
+    "sha256": "aba90202a9005687e589aaec5b906bedeb84865fdce9045d6049e646175474c9",
+    "mtime": "2026-11-19T08:54:06",
+    "before_cutoff": true
+   },
+   "bb142.py": {
+    "sha256": "3784e64f0e5ef8083591771cde0e0e51998938ecced9d4e0429a33023df220e0",
+    "mtime": "2026-11-11T15:30:11",
+    "before_cutoff": true
+   },
+   "bnd.py": {
+    "sha256": "1cc42fd62dc8d43b74d307b9f8eb6563ed9f52a9ec601c6836a32ad0579cf367",
+    "mtime": "2026-11-05T16:47:38",
+    "before_cutoff": true
+   },
+   "d1_punits.py": {
+    "sha256": "da8c11bb9440324a335da22033ec5777f88d72e49ca77370862b207904319fa1",
+    "mtime": "2026-11-13T05:01:57",
+    "before_cutoff": true
+   },
+   "d1_views.py": {
+    "sha256": "b005c4e3826541e16c903ac465c595270414079de8798937f9886cf4da81ff59",
+    "mtime": "2026-11-12T14:32:25",
+    "before_cutoff": true
+   },
+   "frontend.py": {
+    "sha256": "de1633cbdfb0de7cdc7413d6699dceb2dc7ef5b9c10ad69981dec3a0d3daf1da",
+    "mtime": "2026-11-05T04:42:45",
+    "before_cutoff": true
+   },
+   "gate.py": {
+    "sha256": "2ed8d53f83a752fc1b75b2e627f0785ca327fc9c72df7b0411bd86ab42d18509",
+    "mtime": "2026-11-05T03:56:03",
+    "before_cutoff": true
+   },
+   "labels2c.py": {
+    "sha256": "74be182fb7dc69bf03989fd7e147ee2bdfdf7f908f4c7a2f71cd641ef33892ee",
+    "mtime": "2026-11-15T07:48:23",
+    "before_cutoff": true
+   },
+   "lattice.py": {
+    "sha256": "11c7fb3d2a15508ba644b1d9abaf01297d749268182bb34fc6fda6f1c35b982b",
+    "mtime": "2026-11-06T06:27:04",
+    "before_cutoff": true
+   },
+   "logs_2c/run2/af.py": {
+    "sha256": "2f697335ef824e0e3978432698c6c28c4f3543736fdeff082abf70e772fe3686",
+    "mtime": "2026-11-15T19:07:57",
+    "before_cutoff": true
+   },
+   "logs_2c/run2/base5_next.py": {
+    "sha256": "23c714719d148c30ceb9d9d8a4e19e3bd94d2b8a6763c5542bec00f2c1b3f28b",
+    "mtime": "2026-11-15T19:07:57",
+    "before_cutoff": true
+   },
+   "logs_2c/run2/labels2c.py": {
+    "sha256": "74be182fb7dc69bf03989fd7e147ee2bdfdf7f908f4c7a2f71cd641ef33892ee",
+    "mtime": "2026-11-15T19:07:57",
+    "before_cutoff": true
+   },
+   "logs_2c/run2/struct2c_AS_RUN.py": {
+    "sha256": "8d0c54b78e25981b9c99cd3353c2822a541b8e911f373e261639e37257e85c6d",
+    "mtime": "2026-11-15T19:07:57",
+    "before_cutoff": true
+   },
+   "p2iv_lm.py": {
+    "sha256": "b98fcea50708ec7f77f42afb8d7bc2a5f34b2c99af7318b09a69520b5feca623",
+    "mtime": "2026-11-18T00:11:33",
+    "before_cutoff": true
+   },
+   "phase0_beam.py": {
+    "sha256": "c61d587c51950befc92f94add8ec65fc591f531a013d24ba25c5da08368a0052",
+    "mtime": "2026-11-17T12:52:33",
+    "before_cutoff": true
+   },
+   "phase0_score.py": {
+    "sha256": "8636fe5729cfa2918ad0fa1a51e7ea6a9b821bbd7b964bbabeb022b2014dce30",
+    "mtime": "2026-11-17T14:33:24",
+    "before_cutoff": true
+   },
+   "phones.py": {
+    "sha256": "04bb085b61d6701f6d6d7523ce599c5f7ad0f9c0a8a5147e3ecbe958145d7b8b",
+    "mtime": "2026-11-05T03:59:40",
+    "before_cutoff": true
+   },
+   "phones10.py": {
+    "sha256": "4b541a0ef0eef23561dd960c1e9cd2972800ba7c5c8f0ba5642530002dfc991c",
+    "mtime": "2026-11-05T09:01:18",
+    "before_cutoff": true
+   },
+   "phones11.py": {
+    "sha256": "8b7aa60c06d49415be01a0bd6c4628871d972731530d21b36a629d1d0f460975",
+    "mtime": "2026-11-05T09:29:20",
+    "before_cutoff": true
+   },
+   "phones12.py": {
+    "sha256": "0e733e976b66d6f15278847f54e1804632503822045c620d212b19238d348c68",
+    "mtime": "2026-11-05T09:39:40",
+    "before_cutoff": true
+   },
+   "phones13.py": {
+    "sha256": "51131487925c0c1b47786b28f70de85ff2fb368b6687cb9600072eaae4958902",
+    "mtime": "2026-11-05T10:04:17",
+    "before_cutoff": true
+   },
+   "phones14.py": {
+    "sha256": "0076a3a7e7d66ebcdf319ae168329965ee9ab5d1487223088b3165fcbba2d87d",
+    "mtime": "2026-11-05T10:12:09",
+    "before_cutoff": true
+   },
+   "phones15.py": {
+    "sha256": "96607b38392ef5e7b2c3dda401a7449b748fdc31d5cfe761e2b7f23f8bb5d250",
+    "mtime": "2026-11-05T10:29:09",
+    "before_cutoff": true
+   },
+   "phones16.py": {
+    "sha256": "287a75a6942026911212aca1843bb6b5eeb6d0851386f8143a9407c084c43600",
+    "mtime": "2026-11-05T11:38:18",
+    "before_cutoff": true
+   },
+   "phones19.py": {
+    "sha256": "2fcb9d39e0f3693e79e67c2a33d6df0771f4d0eb417d7c8d046484a5c79ffafd",
+    "mtime": "2026-11-05T13:10:00",
+    "before_cutoff": true
+   },
+   "phones2.py": {
+    "sha256": "07525b244d4499c12c38acec3596776d2fbe126f27b238c802d36d044e510eea",
+    "mtime": "2026-11-05T05:12:19",
+    "before_cutoff": true
+   },
+   "phones23.py": {
+    "sha256": "76322a6c3519f09b939f66ae03f589392014712ee82094b8f1b58bd55c2b6a9d",
+    "mtime": "2026-11-05T12:49:23",
+    "before_cutoff": true
+   },
+   "phones24.py": {
+    "sha256": "6da8d52d7d3a0464c66bc3af3ecc77936382095e9a0b6f915d7d4f291ae5d37c",
+    "mtime": "2026-11-05T13:10:00",
+    "before_cutoff": true
+   },
+   "phones25.py": {
+    "sha256": "e67d9984b5c1f74e386735c9bc0de6459dc221a22464427bb330967afe18e229",
+    "mtime": "2026-11-05T13:21:07",
+    "before_cutoff": true
+   },
+   "phones27.py": {
+    "sha256": "0a537ca75a2ce046e7c3705b94880015c019c7271d4ac6856c1245d2c2bf7474",
+    "mtime": "2026-11-05T13:31:58",
+    "before_cutoff": true
+   },
+   "phones28.py": {
+    "sha256": "88b1d0b9d895937e7e86235f51ee6fdbf088c56cc9c17a05223fe8a60d6c874e",
+    "mtime": "2026-11-05T13:41:08",
+    "before_cutoff": true
+   },
+   "phones3.py": {
+    "sha256": "50183c2e8f865446416dcc6b0229e13c0286ba4470799cd8294cd3f27cc66fb9",
+    "mtime": "2026-11-05T05:54:41",
+    "before_cutoff": true
+   },
+   "phones32.py": {
+    "sha256": "b294fd7c6fa77489c1a08f6e45607308abdf3767206bcd39dcf2d8c4c964c769",
+    "mtime": "2026-11-05T14:31:26",
+    "before_cutoff": true
+   },
+   "phones33.py": {
+    "sha256": "81565d2f0b6cfcbe1ac7f9e5d0b2dde39ee3bb1891250d833f949c2307ced211",
+    "mtime": "2026-11-05T14:35:58",
+    "before_cutoff": true
+   },
+   "phones34.py": {
+    "sha256": "02a425d530fbbd7315ec67e121942cd335cb7c700a2ce347c0f6b4490e7717a4",
+    "mtime": "2026-11-05T15:20:46",
+    "before_cutoff": true
+   },
+   "phones38.py": {
+    "sha256": "88598e6270fcb518290edfb7006013255bb5822dd6dd628afb328bd6b9bae141",
+    "mtime": "2026-11-05T15:04:06",
+    "before_cutoff": true
+   },
+   "phones39.py": {
+    "sha256": "ae04c01b1aa484dcbd5c1830d7e6dae5cebc157926f92ebd74757659d2207199",
+    "mtime": "2026-11-05T15:16:00",
+    "before_cutoff": true
+   },
+   "phones4.py": {
+    "sha256": "e06eaeeb641bc4524d3d4518ec7ab7eef37898da126f6c577d4ce0887d863b27",
+    "mtime": "2026-11-05T06:04:52",
+    "before_cutoff": true
+   },
+   "phones42.py": {
+    "sha256": "a0e09f480b31010422da12357cf1266f227d17f0d8407097973ded8c889c77ff",
+    "mtime": "2026-11-05T16:15:36",
+    "before_cutoff": true
+   },
+   "phones44.py": {
+    "sha256": "3187b1468e365dfff86b03250d3393a2900bd84ee63e737dd262272cae7ff592",
+    "mtime": "2026-11-05T21:17:36",
+    "before_cutoff": true
+   },
+   "phones46.py": {
+    "sha256": "b1211bab0a9b9e1db4d518b37f4e4af0e31a5d5c951955e8a135de4a957653e7",
+    "mtime": "2026-11-06T12:06:34",
+    "before_cutoff": true
+   },
+   "phones5.py": {
+    "sha256": "b0424a102667335d7667266103f5e895da2c149e0453971aebf0c4fe3d7f2705",
+    "mtime": "2026-11-05T06:42:58",
+    "before_cutoff": true
+   },
+   "phones51.py": {
+    "sha256": "a6884fb474e7b17a791c277a99a3e8d8bae5c62f2a1f8169e754249ae1b22a88",
+    "mtime": "2026-11-05T20:13:41",
+    "before_cutoff": true
+   },
+   "phones6.py": {
+    "sha256": "9adf380f1b1a0e0f075d869fc927029db2ad55e07bd98615cc7ccc547f197e48",
+    "mtime": "2026-11-05T06:59:50",
+    "before_cutoff": true
+   },
+   "phones8.py": {
+    "sha256": "6adf542d8b2546ac1fdbfd71bc669dd2cd167084db19bdd8eae36d5694a1e179",
+    "mtime": "2026-11-05T07:51:38",
+    "before_cutoff": true
+   },
+   "segdec.py": {
+    "sha256": "4e4a23b0ff0f9ecf68f4bddf363c17b3ab45379c2042360a7c394c5f3ef36a09",
+    "mtime": "2026-11-05T16:14:50",
+    "before_cutoff": true
+   },
+   "step0/gpu_gate2.py": {
+    "sha256": "49b31d6d6ad538a184cfa0b3af8cdd4d32b2a34240fea9fa8b420c59237938db",
+    "mtime": "2026-11-20T07:35:15",
+    "before_cutoff": false,
+    "amended_rule": {
+     "PASS": false,
+     "reason": "no backup older than the cutoff"
+    }
+   },
+   "step0/reader_v65.py": {
+    "sha256": "533bb02b0e64f9604eff2619860df66f4e0183cea18afa1a6ebcd4124ef0321e",
+    "mtime": "2026-11-20T03:39:18",
+    "before_cutoff": false,
+    "amended_rule": {
+     "PASS": false,
+     "reason": "no backup older than the cutoff"
+    }
+   },
+   "step0/score_locked.py": {
+    "sha256": "d58fc058ecca9e542670395c30063b5dfc18fbc4e0a96178fb10d425f04af3d1",
+    "mtime": "2026-11-20T01:36:19",
+    "before_cutoff": true
+   },
+   "vtln_self.py": {
+    "sha256": "c71dc53c927beaa118743e10b88358d22ebb031127bb664f134828857eacb4b2",
+    "mtime": "2026-11-18T01:18:44",
+    "before_cutoff": true
+   },
+   "vtln_tc100.py": {
+    "sha256": "35203515ca4fe3962596e90889a724075be4b204864be5d649c68ea24909ab75",
+    "mtime": "2026-11-19T19:10:37",
+    "before_cutoff": true
+   },
+   "../small_net/cifar_q1.py": {
+    "sha256": "c8ea1ad8b380bf4826951e526d8c8f5ae3debb01c782862fa1257fed02bb77f6",
+    "mtime": "2026-11-19T23:52:06",
+    "before_cutoff": true
+   },
+   "../small_net/sec2_abs.py": {
+    "sha256": "fab27cc80a3fc067f153d380196ec7e1a5dbe55e6663f51f62cbc4339db418f5",
+    "mtime": "2026-11-20T01:57:56",
+    "before_cutoff": false,
+    "amended_rule": {
+     "PASS": false,
+     "reason": "no backup older than the cutoff"
+    }
+   },
+   "../small_net/sec2_q2c_entry.py": {
+    "sha256": "bb24f551cf6c4a2300025f091d8a88570d697199929672f3d35d9adfcc0d6c5a",
+    "mtime": "2026-11-20T03:07:11",
+    "before_cutoff": false,
+    "amended_rule": {
+     "PASS": false,
+     "reason": "no backup older than the cutoff"
+    }
+   }
+  },
+  "data": {
+   "base5_cal.npz": {
+    "mtime": "2026-11-14T17:55:45",
+    "before_cutoff": true,
+    "sha256_manifest": "909ecdbf51b0a475b44197b5017ea07242e7c16387c687c7db9608a4b558dfd5"
+   },
+   "base5_cal_sp0.9.npz": {
+    "mtime": "2026-11-14T17:57:05",
+    "before_cutoff": true,
+    "sha256_manifest": "b322115a7757d4d5855ff5acecd7a38e5f4a817f0891e7bd894000b7b86a566f"
+   },
+   "base5_cal_sp1.1.npz": {
+    "mtime": "2026-11-14T17:57:12",
+    "before_cutoff": true,
+    "sha256_manifest": "ff246e30f91971c050b38ca1f5b33fd07fc3126cb37c52662f70a4d076b5a6e6"
+   },
+   "base5_cleanS.npz": {
+    "mtime": "2026-11-17T12:26:57",
+    "before_cutoff": true,
+    "sha256_manifest": "2a5f40fc3842444fd65452ef610c7b0aa0d84d477ba2f68f4c088586e42b4619"
+   },
+   "base5_fit.npz": {
+    "mtime": "2026-11-14T17:55:37",
+    "before_cutoff": true,
+    "sha256_manifest": "e6513d31ff6be8aceff784365099b9832adaec60f6beaa4f42944b321bd6fb61"
+   },
+   "base5_fit_sp0.9.npz": {
+    "mtime": "2026-11-14T17:56:26",
+    "before_cutoff": true,
+    "sha256_manifest": "d78f2f90a5faf9555738c1c8eb0a4a4084da13e7998bf981b62e609a356f3627"
+   },
+   "base5_fit_sp1.1.npz": {
+    "mtime": "2026-11-14T17:56:55",
+    "before_cutoff": true,
+    "sha256_manifest": "a624c61b896e391184cfa2f362b435b05b26fe5981210273651701537627ace2"
+   },
+   "base5_libriA.npz": {
+    "mtime": "2026-11-14T17:55:49",
+    "before_cutoff": true,
+    "sha256_manifest": "c66c92c5ef8c0654f6ca8da2eeb592f4811f80576bf8ecdca1ce45425ec87c44"
+   },
+   "base5_speakers.json": {
+    "mtime": "2026-11-17T19:01:14",
+    "before_cutoff": true,
+    "sha256_manifest": "14c58efc8e7e3c51402a5ef445bef267f629bdd8376f6b17128d18ee0570e10e"
+   },
+   "noise_esc50_f1234.npz": {
+    "mtime": "2026-11-14T19:59:41",
+    "before_cutoff": true,
+    "sha256_manifest": "f6bc43784ab5afd57968b4545446119bf4501e79719ff8c0fed1f2ffae830df1"
+   },
+   "sealed/base5_cleanT.npz": {
+    "mtime": "2026-11-17T12:27:09",
+    "before_cutoff": true,
+    "sha256_manifest": "4cff140cd3d5417f5fb7290ccc21dbb7934313c5af3ffea4b6cbe1cb57cf21a2"
+   },
+   "spk_cal.npz": {
+    "mtime": "2026-11-15T01:17:42",
+    "before_cutoff": true,
+    "sha256_manifest": "9344bc15f8343e11a86e21bdf0b2ec87613acfbaf8886c84f635c6ff686ba54f"
+   },
+   "spk_cal_sp0.9.npz": {
+    "mtime": "2026-11-15T01:17:53",
+    "before_cutoff": true,
+    "sha256_manifest": "d528ce3c80db3d07b8b67348b18223e49f727888a6e7bd130403b0d5aec5d382"
+   },
+   "spk_cal_sp1.1.npz": {
+    "mtime": "2026-11-15T01:18:04",
+    "before_cutoff": true,
+    "sha256_manifest": "2c33ff84202a9de7ef68c8df8eff105856f418701562d99f10dfcef33d5f75bb"
+   },
+   "spk_cleanS.npz": {
+    "mtime": "2026-11-17T13:14:43",
+    "before_cutoff": true,
+    "sha256_manifest": "fbcc8cc4a1e55cce5fb24479f614b1a900e345a9bd1652290bacec7b2733b57d"
+   },
+   "spk_fit.npz": {
+    "mtime": "2026-11-15T01:17:40",
+    "before_cutoff": true,
+    "sha256_manifest": "5f34a02da507c3954bd9689218e0532bb479c7c9787ae8fb1b6918b38cf48e6c"
+   },
+   "spk_fit_sp0.9.npz": {
+    "mtime": "2026-11-15T01:17:51",
+    "before_cutoff": true,
+    "sha256_manifest": "6041dca768c9162f0e2bc27aab89d4ca516decab3137512161ae131c46cb5b7b"
+   },
+   "spk_fit_sp1.1.npz": {
+    "mtime": "2026-11-15T01:18:02",
+    "before_cutoff": true,
+    "sha256_manifest": "e79f0a37ee21daad72a89af176c25a69e82432f3c2709e204f43b2948108ff46"
+   },
+   "spk_libriA.npz": {
+    "mtime": "2026-11-15T01:18:04",
+    "before_cutoff": true,
+    "sha256_manifest": "3af8d0b01c53cd3c7a393a3a93e4ba24b3ceb29bb554e8aa63f1b90ee22b34e3"
+   },
+   "vtln_S_cal.npz": {
+    "mtime": "2026-11-18T00:27:37",
+    "before_cutoff": true,
+    "sha256_manifest": "7b0e7b724e4f43eafea0204d05a3cef4071990708a19a35cfa1a14e4c095cc31"
+   },
+   "vtln_S_cal_sp0.9.npz": {
+    "mtime": "2026-11-18T00:33:36",
+    "before_cutoff": true,
+    "sha256_manifest": "366e57010d86756c0d00c44cbbb3dd643ca238071c03743798fea667320098d7"
+   },
+   "vtln_S_cal_sp1.1.npz": {
+    "mtime": "2026-11-18T00:40:34",
+    "before_cutoff": true,
+    "sha256_manifest": "27c80579302fc99f42d8c2ce6f3b06f574a450610a30a50046a11caab28b12a0"
+   },
+   "vtln_S_cleanS.npz": {
+    "mtime": "2026-11-18T00:45:54",
+    "before_cutoff": true,
+    "sha256_manifest": "16f40ee07eeae7ce605019c715963fb343a72eb7c9ae05830f49fe27ba0fde02"
+   },
+   "vtln_S_fit.npz": {
+    "mtime": "2026-11-18T00:24:56",
+    "before_cutoff": true,
+    "sha256_manifest": "76e6b01766045d9930726b5efa5bfb1c018178ec5f5f4d37022ff5a44878b691"
+   },
+   "vtln_S_fit_sp0.9.npz": {
+    "mtime": "2026-11-18T00:32:39",
+    "before_cutoff": true,
+    "sha256_manifest": "019f2f7c5e3a89f042317edb974085b2162599438d52cef694e7567e4a2e018e"
+   },
+   "vtln_S_fit_sp1.1.npz": {
+    "mtime": "2026-11-18T00:38:16",
+    "before_cutoff": true,
+    "sha256_manifest": "9189d64112c72ca3dfe3470ddb6577c1a5e81960f77c3028ed0e8a995dacb52f"
+   },
+   "vtln_S_libriA.npz": {
+    "mtime": "2026-11-18T00:41:24",
+    "before_cutoff": true,
+    "sha256_manifest": "96113f26584af0b3e451d806e6e6f4f8c9dc824a1cb541a6dd1bbd61ad5ff6da"
+   },
+   "vtln_cal.npz": {
+    "mtime": "2026-11-15T02:03:23",
+    "before_cutoff": true,
+    "sha256_manifest": "44291bb3bb117897aa6c89e56b22b9e289ab78712433aa1261deeeea8484de0b"
+   },
+   "vtln_cal_sp0.9.npz": {
+    "mtime": "2026-11-15T02:44:49",
+    "before_cutoff": true,
+    "sha256_manifest": "a6a6ca689f07fcd4e593584c370eb2310dd8e251fe0c857003c9c3f3bdfa58db"
+   },
+   "vtln_cal_sp1.1.npz": {
+    "mtime": "2026-11-15T03:00:22",
+    "before_cutoff": true,
+    "sha256_manifest": "d79e335f636530876faeb114fb16f5bd909c2272899134ad6d0f2c017be879ae"
+   },
+   "vtln_cleanS.npz": {
+    "mtime": "2026-11-17T13:14:42",
+    "before_cutoff": true,
+    "sha256_manifest": "d354b88c931cae101502c2665b55d5aed1bc05606891f902dc4f174a34da9aa7"
+   },
+   "vtln_fit.npz": {
+    "mtime": "2026-11-15T01:58:49",
+    "before_cutoff": true,
+    "sha256_manifest": "f533960c401efa45de908ccd8dfd8e136ec25cbe90a10709fd18f170537cfbb3"
+   },
+   "vtln_fit_sp0.9.npz": {
+    "mtime": "2026-11-15T02:38:30",
+    "before_cutoff": true,
+    "sha256_manifest": "ca2633fedd4df9aef860aa73c19ec5db5fbf71a2a28cd47cf3dc83b7e2b2ecf1"
+   },
+   "vtln_fit_sp1.1.npz": {
+    "mtime": "2026-11-15T02:56:31",
+    "before_cutoff": true,
+    "sha256_manifest": "8cbe6f7e3a6bee2c308c39ac63e008133c1f1237cc9acebc2b867b31499ea058"
+   },
+   "vtln_libriA.npz": {
+    "mtime": "2026-11-15T01:42:36",
+    "before_cutoff": true,
+    "sha256_manifest": "7e24bb8afc042c306da9e1150f28f208d467665ec2f96e57470f0b7beae529df"
+   },
+   "trk31_fit.npy": {
+    "mtime": "2026-11-05T20:16:13",
+    "before_cutoff": true,
+    "sha256": "f9381869c041d71e9f66db33f5f20484ff68a44fca88c3e3e6c23bacdad593b6"
+   },
+   "ph_fit.npz": {
+    "mtime": "2026-11-05T04:35:08",
+    "before_cutoff": true,
+    "sha256": "83474d35c78ce34d6fde5585d358e0d48c929dfc11d242bc680cfed331dd3661"
+   },
+   "ph_cal.npz": {
+    "mtime": "2026-11-05T04:36:24",
+    "before_cutoff": true,
+    "sha256": "9c263949952dad2cd707ab932f48a8f81a143e564761ccafbd50ac86277fa7d1"
+   }
+  },
+  "PASS_literal_v65": false,
+  "PASS_amended": false
+ }
+}
